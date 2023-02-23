@@ -33,4 +33,4 @@ Como desafío se animó a que se deje fluir la creatividad, y agregar otros tipo
 
 ✔️ **Información Adicional**
 
-Se entregó un gif explicando como podría funcionar la aplicación, este archivo se agregó al repositorio con el nombre de funcionamiento del conversor.gif
+Se entregó un gif explicando como podría funcionar la aplicación, este archivo se agregó al repositorio con el nombre de "funcionamiento del conversor.gif"
