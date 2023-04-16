@@ -55,9 +55,10 @@ public class Formulario extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         
         // Agregar componentes al panel
-        gbc.anchor = GridBagConstraints.LINE_START;
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.LINE_START;
+      
         panel.add(lblNombre, gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -86,8 +87,7 @@ public class Formulario extends JFrame {
         
         gbc.gridx = 0;
         gbc.gridy = 4;
-        panel.add(lblPais, gbc);
-        gbc.gridx = 1;
+        panel.add(lblPais, gbc.gridx = 1);
         gbc.gridy = 4;
         panel.add(cbPais, gbc);
         
