@@ -5,10 +5,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JList;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Secundario extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -36,6 +47,75 @@ public class Secundario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-	}
+		contentPane.setLayout(null);
+//	      - Convertir de la moneda de tu país a Dólar
+//	      - Convertir de la moneda de tu país  a Euros
+//	      - Convertir de la moneda de tu país  a Libras Esterlinas
+//	      - Convertir de la moneda de tu país  a Yen Japonés
+//	      - Convertir de la moneda de tu país  a Won sul-coreano
+	      
+	      
+	      
+	      
+		String[] opcionesDivisas = new String[]{"Colón Salvadoreño", "Dólar Estadounidense",
+				"EUR Euros", "GBP Libras Esterlinas", "JPY Yen Japonés", "KRW Won Sur Coreano"};
+		JComboBox comboBox = new JComboBox(opcionesDivisas);
+		//cbPais = new JComboBox<String>(new String[]{"Argentina", "Brasil", "Chile", "Colombia", "México", "Perú", "Uruguay"});
+		comboBox.setBounds(10, 50, 277, 38);
+		contentPane.add(comboBox);
+		
+		JComboBox comboBox_1 = new JComboBox(opcionesDivisas);
+		comboBox_1.setBounds(10, 133, 277, 38);
+		contentPane.add(comboBox_1);
+		
+		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (!textField.getText().isEmpty()) {
+					Float valor = Float. parseFloat(textField.getText());
+					if (valor>0){
+						textField_1.setText(Float.toString((float) (valor*8.75)));
+					}
+				}else {
+					textField_1.setText("");
+				}
+				
+			}
+		});
 
+		textField.setText("1");
+		
+
+		textField.setBounds(313, 50, 96, 38);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(313, 133, 96, 38);
+		contentPane.add(textField_1);
+		
+		esNumero(textField);
+
+	}
+	
+	private void esNumero(JTextField a) {
+		a.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (a.getText().length() == 0 && c == '.'){
+					e.consume();
+				}else {
+					if (!Character.isDigit(c) && c != '.') {
+						e.consume();
+					}
+					if (c == '.' && a.getText().contains(".")) {
+						e.consume();
+					}
+				}
+			}
+		});
+	}
 }

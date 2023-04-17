@@ -6,6 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/ARCHIVOS DE CURSOS ALURA/11 ESPECIALIZACION JAVA BACK-END/WORKSPACE_ALURA/Challenge-Oracle-One-Conversor-De-Monedas/utilitarios/okhttp-4.2.1.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/okhttp-4.2.1.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/RSScaleLabel.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
