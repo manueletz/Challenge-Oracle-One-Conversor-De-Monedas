@@ -9,6 +9,7 @@ import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
@@ -54,9 +55,30 @@ public class Secundario extends JFrame {
 //	      - Convertir de la moneda de tu país  a Yen Japonés
 //	      - Convertir de la moneda de tu país  a Won sul-coreano
 	      
-	      
-	      
-	      
+	    
+		/*
+		{
+			"SLV": "SLV - Colón Salvadoreño", 
+			"USD": "USD - Dólar Estadounidense",
+			"EUR": "EUR - Euros",
+			"GBP": "GBP - Libras Esterlinas",
+			"JPY": "JPY - Yen Japonés",
+			"KRW": "KRW - Won Surcoreano"
+		}
+		*/
+		
+		HashMap<String, String> divisas = new HashMap<String, String>();
+		
+		divisas.put("SLV", "SLV - Colón Salvadoreño");
+		divisas.put("USD", "USD - Dólar Estadounidense");
+		divisas.put("EUR", "EUR - Euros");
+		divisas.put("GBP", "GBP - Libras Esterlinas");
+		divisas.put("JPY", "JPY - Yen Japonés");
+		divisas.put("KRW", "KRW - Won Surcoreano");
+		
+		divisas.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+	
+		
 		String[] opcionesDivisas = new String[]{"Colón Salvadoreño", "Dólar Estadounidense",
 				"EUR Euros", "GBP Libras Esterlinas", "JPY Yen Japonés", "KRW Won Sur Coreano"};
 		JComboBox comboBox = new JComboBox(opcionesDivisas);
@@ -75,6 +97,7 @@ public class Secundario extends JFrame {
 				if (!textField.getText().isEmpty()) {
 					Float valor = Float. parseFloat(textField.getText());
 					if (valor>0){
+						System.out.println(comboBox.getSelectedIndex());
 						textField_1.setText(Float.toString((float) (valor*8.75)));
 					}
 				}else {
