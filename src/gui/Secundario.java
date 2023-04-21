@@ -9,7 +9,9 @@ import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.beans.PropertyChangeListener;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
@@ -76,17 +78,23 @@ public class Secundario extends JFrame {
 		divisas.put("JPY", "JPY - Yen Japonés");
 		divisas.put("KRW", "KRW - Won Surcoreano");
 		
+//		SLV->USD 1 - 0.11
+//		SLV->EUR 1 - 0.10
+//		SLV->GBP 1 - 0.092
+//		SLV->JPY 1 - 15.29
+//		SLV->KRW 1 - 152.03
 		
-//		SLV->KRW
-//		SLV->JPY
-//		SLV->EUR
-//		SLV->GBP
-//		SLV->USD
-//
+//		USD->SLV 1 - 8.75
+//		EUR->SLV 1 - 9.61
+//		GBP->SLV 1 - 10.86
+//		JPY->SLV 1 - 0.065
+//		KRW->SLV 1 - 1 - 0.0066
 		
+		//BigDecimal cambios = new BigDecimal(0);
+
+		//divisas.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
 		
-		divisas.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
-		
+		/*
 	    for (String keyBase : divisas.keySet()) {
 	        for (String keyResultado : divisas.keySet()) {
 	        	if (!(keyBase == keyResultado)){
@@ -95,6 +103,17 @@ public class Secundario extends JFrame {
 	        	
 	        }
 	    }
+	    */
+	    
+		for (Map.Entry<String, String> entryPrimera : divisas.entrySet()) {
+	        //System.out.println(entry.getKey() + " = " + entry.getValue());
+			for (Map.Entry<String, String> entrySegunda : divisas.entrySet()) {
+				if (!(entryPrimera.getKey()==entrySegunda.getKey())){
+					System.out.println(entryPrimera.getKey()+"->"+entrySegunda.getKey());
+				}
+			}
+	    }
+	    
 		
 		
 		
