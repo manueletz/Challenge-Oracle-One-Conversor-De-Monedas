@@ -76,8 +76,27 @@ public class Secundario extends JFrame {
 		divisas.put("JPY", "JPY - Yen Japonés");
 		divisas.put("KRW", "KRW - Won Surcoreano");
 		
+		
+//		SLV->KRW
+//		SLV->JPY
+//		SLV->EUR
+//		SLV->GBP
+//		SLV->USD
+//
+		
+		
 		divisas.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
-	
+		
+	    for (String keyBase : divisas.keySet()) {
+	        for (String keyResultado : divisas.keySet()) {
+	        	if (!(keyBase == keyResultado)){
+	        		System.out.println(keyBase + "->" + keyResultado);
+	        	}
+	        	
+	        }
+	    }
+		
+		
 		
 		String[] opcionesDivisas = new String[]{"Colón Salvadoreño", "Dólar Estadounidense",
 				"EUR Euros", "GBP Libras Esterlinas", "JPY Yen Japonés", "KRW Won Sur Coreano"};
