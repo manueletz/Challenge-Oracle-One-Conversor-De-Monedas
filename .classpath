@@ -8,5 +8,12 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="src/utilitarios/okhttp-4.2.1.jar"/>
 	<classpathentry kind="lib" path="src/utilitarios/RSScaleLabel.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/kotlin-stdlib-1.3.50.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/okio-2.4.0.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/jackson-core-2.15.0-rc3.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/jackson-databind-2.15.0-rc3.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/jackson-annotations-2.15.0-rc3.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/jackson-datatype-jsr310-2.15.0-rc3.jar"/>
+	<classpathentry kind="lib" path="src/utilitarios/gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

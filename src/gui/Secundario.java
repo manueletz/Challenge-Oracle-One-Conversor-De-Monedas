@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import apis.TasasPorDefecto;
+
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -71,7 +74,7 @@ public class Secundario extends JFrame {
 		
 		HashMap<String, String> divisas = new HashMap<String, String>();
 		
-		divisas.put("SLV", "SLV - Colón Salvadoreño");
+		divisas.put("SVC", "SVC - Colón Salvadoreño");
 		divisas.put("USD", "USD - Dólar Estadounidense");
 		divisas.put("EUR", "EUR - Euros");
 		divisas.put("GBP", "GBP - Libras Esterlinas");
@@ -115,9 +118,29 @@ public class Secundario extends JFrame {
 	    }
 	    
 		
+		HashMap<String, String> divisasParaApi = new HashMap<String, String>();
+		
+		String base = "";
+		String simbolos = "";
+		
+		for (Map.Entry<String, String> entryPrimera : divisas.entrySet()) {
+	        base = entryPrimera.getKey();
+	        simbolos = "";
+			for (Map.Entry<String, String> entrySegunda : divisas.entrySet()) {
+				if (!(entryPrimera.getKey()==entrySegunda.getKey())){
+					//System.out.println(entryPrimera.getKey()+"->"+entrySegunda.getKey());
+					simbolos += entrySegunda.getKey()+",";
+	
+				}
+			}
+			simbolos = simbolos.substring(0, simbolos.length()-1);
+			divisasParaApi.put(base, simbolos);
+	    }
+		System.out.println(divisasParaApi);
 		
 		
-		String[] opcionesDivisas = new String[]{"Colón Salvadoreño", "Dólar Estadounidense",
+		
+		String[] opcionesDivisas = new String[]{"SVC Colón Salvadoreño", "USD Dólar Estadounidense",
 				"EUR Euros", "GBP Libras Esterlinas", "JPY Yen Japonés", "KRW Won Sur Coreano"};
 		JComboBox comboBox = new JComboBox(opcionesDivisas);
 		//cbPais = new JComboBox<String>(new String[]{"Argentina", "Brasil", "Chile", "Colombia", "México", "Perú", "Uruguay"});
@@ -127,6 +150,7 @@ public class Secundario extends JFrame {
 		JComboBox comboBox_1 = new JComboBox(opcionesDivisas);
 		comboBox_1.setBounds(10, 133, 277, 38);
 		contentPane.add(comboBox_1);
+		comboBox_1.setSelectedIndex(1);
 		
 		textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
@@ -144,31 +168,37 @@ public class Secundario extends JFrame {
 				
 			}
 		});
-
+		
+		//valor de un color al iniciar de aplicacion
 		textField.setText("1");
 		
-
 		textField.setBounds(313, 50, 96, 38);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		textField_1.setBounds(313, 133, 96, 38);
 		contentPane.add(textField_1);
+
+		//conversion a dolar al iniciar aplicacion
+		TasasPorDefecto tasasPorDefecto = new TasasPorDefecto();
+		BigDecimal valorDolar = tasasPorDefecto.getRates().get("SVC->USD");
+		textField_1.setText(valorDolar.toString());
+
+
 		
 		esNumero(textField);
 
 	}
-	
+
 	private void esNumero(JTextField a) {
 		a.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if (a.getText().length() == 0 && c == '.'){
+				if (a.getText().length() == 0 && c == '.') {
 					e.consume();
-				}else {
+				} else {
 					if (!Character.isDigit(c) && c != '.') {
 						e.consume();
 					}
