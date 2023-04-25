@@ -6,8 +6,9 @@ import java.util.HashMap;
 public class TasasPorDefecto {
 
 	private HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>();
-	
+
 	public TasasPorDefecto(){
+		//rates.put("SVC->GBP", new BigDecimal("0.091862"));
 		rates.put("SVC->GBP", new BigDecimal("0.091862"));
 		rates.put("KRW->USD", new BigDecimal("0.000752"));
 		rates.put("USD->SVC", new BigDecimal("8.745192"));
@@ -42,6 +43,10 @@ public class TasasPorDefecto {
 		//System.out.println(rates);
 		//System.out.println(rates.get("SVC->USD"));
 
+	}
+	
+	public void setRates(HashMap<String, BigDecimal> rates) {
+		this.rates = rates;
 	}
 
 	public HashMap<String, BigDecimal> getRates() {
