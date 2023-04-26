@@ -149,11 +149,11 @@ public class Secundario extends JFrame {
 		
 
 		//cbPais = new JComboBox<String>(new String[]{"Argentina", "Brasil", "Chile", "Colombia", "México", "Perú", "Uruguay"});
-		comboBox.setBounds(10, 50, 277, 38);
+		comboBox.setBounds(10, 39, 277, 38);
 		contentPane.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox(opcionesDivisas);
-		comboBox_1.setBounds(10, 133, 277, 38);
+		comboBox_1.setBounds(10, 212, 277, 38);
 		contentPane.add(comboBox_1);
 		comboBox_1.setSelectedIndex(1);
 		
@@ -192,12 +192,52 @@ public class Secundario extends JFrame {
 		
 		//Evento cuando se cambia un elemento de la lista
 		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
+			Object itemAnterior = null;
+			public void itemStateChanged(ItemEvent ie) {
 				//System.out.println(comboBox.getSelectedItem());
-				System.out.println(ItemEvent.ITEM_LAST);
-				if (ItemEvent.ITEM_LAST==comboBox.getSelectedIndex()) {
-					comboBox_1.setSelectedIndex(ItemEvent.ITEM_LAST);
-				}
+				//System.out.println(arg0.getStateChange());
+				//System.out.println(ItemEvent.DESELECTED);
+				
+				  if(ie.getStateChange() == ItemEvent.DESELECTED){
+				      System.out.println("Previous item: " + ie.getItem()); //edit: bracket was missing
+				      //System.out.println(comboBox.getSelectedIndex());
+				      //System.out.println("ComboBox_1: "+comboBox_1.getSelectedItem());
+//				      if (ie.getItem()==comboBox_1.getSelectedItem()) {
+//				    	  comboBox_1.setSelectedItem(ie.getItem());
+//				      }
+				      itemAnterior=ie.getItem();
+				   } else if(ie.getStateChange() == ItemEvent.SELECTED) {
+				      System.out.println("Current New item: " + ie.getItem());
+				      if (ie.getItem()==comboBox_1.getSelectedItem()) {
+				    	  System.out.println("Aqui: "+itemAnterior);
+				    	  comboBox_1.setSelectedItem(itemAnterior);
+				      }
+				      
+					  if (!textField.getText().isEmpty()) {
+							//Float valor = Float.parseFloat(textField.getText());
+							String valor = textField.getText();
+							if (Float.parseFloat(valor)>0){
+								System.out.println(comboBox.getSelectedIndex());//INDICE DE LAS LISTA EL PRIMERO ES 0
+								System.out.println(comboBox.getSelectedItem());//NOMBRE DE LA LISTA
+								System.out.println(comboBox_1.getSelectedItem());
+								String divisaOrigen  = (String) comboBox.getSelectedItem();
+								String divisaDestino = (String) comboBox_1.getSelectedItem();
+								String simbolosConversion = divisaOrigen.substring(0,3)+"->"+divisaDestino.substring(0,3);
+								System.out.println(simbolosConversion);
+								String resultado=Conversion(simbolosConversion,valor);
+								textField_1.setText(resultado);
+								
+								//textField_1.setText(Float.toString((float) (valor*8.75)));
+							}
+						}else {
+							textField_1.setText("");
+						}
+				   }
+				
+				
+//				if (ItemEvent.ITEM_LAST==comboBox.getSelectedIndex()) {
+//					comboBox_1.setSelectedIndex(ItemEvent.ITEM_LAST);
+//				}
 				/*
 				if (!textField.getText().isEmpty()) {
 					//Float valor = Float.parseFloat(textField.getText());
@@ -227,13 +267,13 @@ public class Secundario extends JFrame {
 		//valor de un color al iniciar de aplicacion
 		textField.setText("1");
 		
-		textField.setBounds(313, 50, 96, 38);
+		textField.setBounds(313, 39, 96, 38);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(313, 133, 96, 38);
+		textField_1.setBounds(313, 212, 96, 38);
 		contentPane.add(textField_1);
 
 		//conversion a dolar al iniciar aplicacion
