@@ -29,6 +29,8 @@ public class Secundario extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private Object itemAnterior = null;
+	private Boolean bloqueoDeEvento = false;
 
 	/**
 	 * Launch the application.
@@ -58,10 +60,10 @@ public class Secundario extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 //	      - Convertir de la moneda de tu país a Dólar
-//	      - Convertir de la moneda de tu país  a Euros
-//	      - Convertir de la moneda de tu país  a Libras Esterlinas
-//	      - Convertir de la moneda de tu país  a Yen Japonés
-//	      - Convertir de la moneda de tu país  a Won sul-coreano
+//	      - Convertir de la moneda de tu país a Euros
+//	      - Convertir de la moneda de tu país a Libras Esterlinas
+//	      - Convertir de la moneda de tu país a Yen Japonés
+//	      - Convertir de la moneda de tu país a Won sul-coreano
 	      
 	    
 		/*
@@ -115,7 +117,7 @@ public class Secundario extends JFrame {
 	        //System.out.println(entry.getKey() + " = " + entry.getValue());
 			for (Map.Entry<String, String> entrySegunda : divisas.entrySet()) {
 				if (!(entryPrimera.getKey()==entrySegunda.getKey())){
-					System.out.println(entryPrimera.getKey()+"->"+entrySegunda.getKey());
+					//System.out.println(entryPrimera.getKey()+"->"+entrySegunda.getKey());
 				}
 			}
 	    }
@@ -139,7 +141,9 @@ public class Secundario extends JFrame {
 			simbolos = simbolos.substring(0, simbolos.length()-1);
 			divisasParaApi.put(base, simbolos);
 	    }
-		System.out.println(divisasParaApi);
+		
+		//ver todas las dividas
+		//System.out.println(divisasParaApi);
 		
 		
 		
@@ -153,6 +157,7 @@ public class Secundario extends JFrame {
 		contentPane.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox(opcionesDivisas);
+
 		comboBox_1.setBounds(10, 212, 277, 38);
 		contentPane.add(comboBox_1);
 		comboBox_1.setSelectedIndex(1);
@@ -192,77 +197,21 @@ public class Secundario extends JFrame {
 		
 		//Evento cuando se cambia un elemento de la lista
 		comboBox.addItemListener(new ItemListener() {
-			Object itemAnterior = null;
+			//Object itemAnterior = null;
 			public void itemStateChanged(ItemEvent ie) {
-				//System.out.println(comboBox.getSelectedItem());
-				//System.out.println(arg0.getStateChange());
-				//System.out.println(ItemEvent.DESELECTED);
-				
-				  if(ie.getStateChange() == ItemEvent.DESELECTED){
-				      System.out.println("Previous item: " + ie.getItem()); //edit: bracket was missing
-				      //System.out.println(comboBox.getSelectedIndex());
-				      //System.out.println("ComboBox_1: "+comboBox_1.getSelectedItem());
-//				      if (ie.getItem()==comboBox_1.getSelectedItem()) {
-//				    	  comboBox_1.setSelectedItem(ie.getItem());
-//				      }
-				      itemAnterior=ie.getItem();
-				   } else if(ie.getStateChange() == ItemEvent.SELECTED) {
-				      System.out.println("Current New item: " + ie.getItem());
-				      if (ie.getItem()==comboBox_1.getSelectedItem()) {
-				    	  System.out.println("Aqui: "+itemAnterior);
-				    	  comboBox_1.setSelectedItem(itemAnterior);
-				      }
-				      
-					  if (!textField.getText().isEmpty()) {
-							//Float valor = Float.parseFloat(textField.getText());
-							String valor = textField.getText();
-							if (Float.parseFloat(valor)>0){
-								System.out.println(comboBox.getSelectedIndex());//INDICE DE LAS LISTA EL PRIMERO ES 0
-								System.out.println(comboBox.getSelectedItem());//NOMBRE DE LA LISTA
-								System.out.println(comboBox_1.getSelectedItem());
-								String divisaOrigen  = (String) comboBox.getSelectedItem();
-								String divisaDestino = (String) comboBox_1.getSelectedItem();
-								String simbolosConversion = divisaOrigen.substring(0,3)+"->"+divisaDestino.substring(0,3);
-								System.out.println(simbolosConversion);
-								String resultado=Conversion(simbolosConversion,valor);
-								textField_1.setText(resultado);
-								
-								//textField_1.setText(Float.toString((float) (valor*8.75)));
-							}
-						}else {
-							textField_1.setText("");
-						}
-				   }
-				
-				
-//				if (ItemEvent.ITEM_LAST==comboBox.getSelectedIndex()) {
-//					comboBox_1.setSelectedIndex(ItemEvent.ITEM_LAST);
-//				}
-				/*
-				if (!textField.getText().isEmpty()) {
-					//Float valor = Float.parseFloat(textField.getText());
-					String valor = textField.getText();
-					if (Float.parseFloat(valor)>0){
-						System.out.println(comboBox.getSelectedIndex());//INDICE DE LAS LISTA EL PRIMERO ES 0
-						System.out.println(comboBox.getSelectedItem());//NOMBRE DE LA LISTA
-						System.out.println(comboBox_1.getSelectedItem());
-						String divisaOrigen  = (String) comboBox.getSelectedItem();
-						String divisaDestino = (String) comboBox_1.getSelectedItem();
-						String simbolosConversion = divisaOrigen.substring(0,3)+"->"+divisaDestino.substring(0,3);
-						System.out.println(simbolosConversion);
-						String resultado=Conversion(simbolosConversion,valor);
-						textField_1.setText(resultado);
-						
-						//textField_1.setText(Float.toString((float) (valor*8.75)));
-					}
-				}else {
-					textField_1.setText("");
-				}
-				*/
-				
+				System.out.println("evento de comboBox");
+				extracted(comboBox, comboBox_1, textField, textField_1, ie);
 			}
+
 		});
 		
+
+		comboBox_1.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ie2) {
+				System.out.println("evento de comboBox_1");
+				extracted(comboBox_1, comboBox, textField_1, textField, ie2);
+			}
+		});
 		
 		//valor de un color al iniciar de aplicacion
 		textField.setText("1");
@@ -291,9 +240,6 @@ public class Secundario extends JFrame {
 		System.out.println(tasasPorDefecto.getRates().get("SVC->GBP"));
 		*/
 		
-		
-		
-		
 		esNumero(textField);
 
 	}
@@ -321,16 +267,104 @@ public class Secundario extends JFrame {
 		BigDecimal tasaConversion = new BigDecimal("0");
 		BigDecimal valor = new BigDecimal(monto);
 		BigDecimal resultado = new BigDecimal("0");
+		String resultadoTexto = "";
 		
 		TasasPorDefecto tasasPorDefecto = new TasasPorDefecto();
 		//tasaConversion= tasasPorDefecto.getRates().get("SVC->USD");
 		tasaConversion= tasasPorDefecto.getRates().get(simbolosConversion);
 		
-		System.out.println(tasaConversion);
-		System.out.println(monto);
-		resultado = tasaConversion.multiply(valor);
-		resultado = resultado.setScale(2, RoundingMode.HALF_UP);
 		
+		System.out.println("Monto Base: " + monto);
+		System.out.println("Tasa de Conversion: " + tasaConversion);
+
+		resultado = tasaConversion.multiply(valor);
+		
+		
+		//resultado = resultado.setScale(2, RoundingMode.HALF_UP);
+		
+		//Resto parte decimal de una numero
+		resultadoTexto = (resultado.remainder(new BigDecimal(1))).toString();
+		//resultadoTexto = resultado.toString();
+		//System.out.println("resultadoTexto: "+resultadoTexto);
+		//System.out.println("length: "+resultadoTexto.length());
+		
+		//iterar en un string
+		/*
+		String[] str_arr = resultadoTexto.split("");
+		
+		for (String digito: str_arr) {
+			System.out.println((digito));
+		}
+		*/
+		
+		Integer verificarCero=0;
+		Integer posicionesRendonde=0;
+		Boolean NoEsCero=false; 
+		Integer dosNumerosDespuesDeCero=0;
+		int i=2;
+		while (i <resultadoTexto.length()) {
+
+			posicionesRendonde++;
+			
+			verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
+			
+			if (verificarCero>0) {
+				NoEsCero=true;
+			}
+			
+			if (NoEsCero==true) {
+				dosNumerosDespuesDeCero++;
+			}
+			
+			if (dosNumerosDespuesDeCero==2) {
+				break;
+			}
+			
+			//System.out.println(resultadoTexto.substring(i,i+1));
+
+			i++;
+		}
+		//System.out.println("posiciones de redondeo: "+posicionesRendonde);
+		
+	
+		//Redondeo a las posiciones de dos digitos despues de cero
+		resultado = resultado.setScale(posicionesRendonde, RoundingMode.HALF_UP);
+		System.out.println("Monto Resultado: " + resultado);
 		return resultado.toString();
+	}
+	
+	private void extracted(JComboBox comboBox, JComboBox comboBox_1, JTextField textField, JTextField textField_1,  ItemEvent ie) {
+		if(ie.getStateChange() == ItemEvent.DESELECTED){
+		      System.out.println("Previous item: " + ie.getItem()); //edit: bracket was missing
+		      itemAnterior=ie.getItem();
+		}else if(ie.getStateChange() == ItemEvent.SELECTED) {
+			System.out.println("Current New item: " + ie.getItem());
+		    if (ie.getItem()==comboBox_1.getSelectedItem()) {
+		    	System.out.println("itemAnterior: "+itemAnterior);
+		    	  
+	    		comboBox_1.setSelectedItem(itemAnterior);
+
+		    }
+		      
+			if (!textField.getText().isEmpty()) {
+					//Float valor = Float.parseFloat(textField.getText());
+					String valor = textField.getText();
+				if (Float.parseFloat(valor)>0){
+					System.out.println(comboBox.getSelectedIndex());//INDICE DE LAS LISTA EL PRIMERO ES 0
+					System.out.println(comboBox.getSelectedItem());//NOMBRE DE LA LISTA
+					System.out.println(comboBox_1.getSelectedItem());
+					String divisaOrigen  = (String) comboBox.getSelectedItem();
+					String divisaDestino = (String) comboBox_1.getSelectedItem();
+					String simbolosConversion = divisaOrigen.substring(0,3)+"->"+divisaDestino.substring(0,3);
+					System.out.println(simbolosConversion);
+					String resultado=Conversion(simbolosConversion,valor);
+					textField_1.setText(resultado);
+					
+					//textField_1.setText(Float.toString((float) (valor*8.75)));
+				}
+			}else {
+				textField_1.setText("");
+			}
+		}
 	}
 }
