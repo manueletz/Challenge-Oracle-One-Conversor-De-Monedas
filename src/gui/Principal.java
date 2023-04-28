@@ -18,7 +18,7 @@ import java.awt.Font;
 //import RSScaleLabel.*;
 
 public class Principal extends JFrame {
-
+	
 	/**
 	 * 
 	 */

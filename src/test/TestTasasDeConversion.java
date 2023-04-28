@@ -76,7 +76,7 @@ public class TestTasasDeConversion {
 		HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>();
 		
 		divisasParaApi.forEach((key,value)->{
-			String fecha = "2023-04-23";
+			String fecha = "2023-04-28";
 			String base = key;
 			String simbolos = value;
 			String [] divisasSplit = null;

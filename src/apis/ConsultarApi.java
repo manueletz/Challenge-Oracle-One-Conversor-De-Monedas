@@ -45,7 +45,7 @@ public class ConsultarApi{
 	    OkHttpClient client = new OkHttpClient().newBuilder().build();
 	    client.newBuilder().build();
 	    Request request = new Request.Builder()
-	      .url("https://api.apilayer.com/fixer/"+"2023-04-23"+"?base="+base+"&symbols="+simbolos)
+	      .url("https://api.apilayer.com/fixer/"+fecha+"?base="+base+"&symbols="+simbolos)
 	      .addHeader("apikey", "T5lxIUvLY5jAjIlw9ZbFD68UFLtpzuDi")
 	      .method("GET", null)
 	      .build();
