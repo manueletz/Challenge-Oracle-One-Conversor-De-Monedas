@@ -2,23 +2,23 @@ package factores;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class MasasPorDefecto {
-	public HashMap<String, String> masasParaApp; 
+	private LinkedHashMap<String, String> masas; 
 
-	private HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>();
+	private LinkedHashMap<String, BigDecimal> rates;
 	
 	public static void main(String[] args) {
 		MasasPorDefecto masasPorDefecto = new MasasPorDefecto();
-		System.out.println(masasPorDefecto.masasParaApp);
+		System.out.println(masasPorDefecto.masas);
 		System.out.println(masasPorDefecto.rates);
 		
 	}
 
 	public MasasPorDefecto() {
 				
-		HashMap<String, String> masas = new HashMap<String, String>();
-		
+		masas = new LinkedHashMap<String, String>();
 		masas.put("t", "t - Tonelada");
 		masas.put("kg", "kg - kilogramo");
 		masas.put("g", "g - Gramo");
@@ -26,12 +26,11 @@ public class MasasPorDefecto {
 		masas.put("lb", "lb - libra");
 		masas.put("oz", "oz - Onza");
 		
-		masasParaApp = new HashMap<String, String>();
-		
+		rates = new LinkedHashMap<String, BigDecimal>();
 		masas.forEach((key,value)->{
 			masas.forEach((keyDos,valueDos)->{
 				if (!(key==keyDos)){
-					masasParaApp.put(key+"->"+keyDos, "");					
+					rates.put(key+"->"+keyDos, new BigDecimal("0"));					
 				}
 			});
 		});
@@ -66,5 +65,26 @@ public class MasasPorDefecto {
 		rates.put("t->lb",new BigDecimal("2204.62262"));
 		rates.put("t->oz",new BigDecimal("35273.9619"));
 		rates.put("t->q",new BigDecimal("10"));
+	}
+
+	@Override
+	public String toString() {
+		return "MasasPorDefecto [rates=" + rates + "]";
+	}
+
+	public LinkedHashMap<String, String> getMasas() {
+		return masas;
+	}
+
+	public void setMasas(LinkedHashMap<String, String> masas) {
+		this.masas = masas;
+	}
+
+	public LinkedHashMap<String, BigDecimal> getRates() {
+		return rates;
+	}
+
+	public void setRates(LinkedHashMap<String, BigDecimal> rates) {
+		this.rates = rates;
 	}
 }

@@ -2,35 +2,35 @@ package factores;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class LongitudesPorDefecto {
-	public HashMap<String, String> longitudesParaApp; 
-
-	private HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>();
+	private LinkedHashMap<String, String> longitudes;
+	
+	private LinkedHashMap<String, BigDecimal> rates;
 	
 	public static void main(String[] args) {
 		LongitudesPorDefecto longitudesPorDefecto = new LongitudesPorDefecto();
-		System.out.println(longitudesPorDefecto.longitudesParaApp);
+		System.out.println(longitudesPorDefecto.longitudes);
 		System.out.println(longitudesPorDefecto.rates);
 		
 	}
+	
 
 	public LongitudesPorDefecto() {
 				
-		HashMap<String, String> longitudes = new HashMap<String, String>();
-		
+		longitudes = new LinkedHashMap<String, String>();
 		longitudes.put("m", "m - Metro");
 		longitudes.put("dm", "dm - Decímetro");
 		longitudes.put("cm", "cm - Centímetro");
 		longitudes.put("mm", "mm - Milímetro");
 
 		
-		longitudesParaApp = new HashMap<String, String>();
-		
+		rates = new LinkedHashMap<String, BigDecimal>();
 		longitudes.forEach((key,value)->{
 			longitudes.forEach((keyDos,valueDos)->{
 				if (!(key==keyDos)){
-					longitudesParaApp.put(key+"->"+keyDos, "");					
+					rates.put(key+"->"+keyDos, new BigDecimal("0"));					
 				}
 			});
 		});
@@ -49,5 +49,29 @@ public class LongitudesPorDefecto {
 		rates.put("mm->m",new BigDecimal("0.001"));
 
 
+	}
+
+	public LinkedHashMap<String, String> getLongitudes() {
+		return longitudes;
+	}
+
+
+	public void setLongitudes(LinkedHashMap<String, String> longitudes) {
+		this.longitudes = longitudes;
+	}
+
+
+	public LinkedHashMap<String, BigDecimal> getRates() {
+		return rates;
+	}
+
+
+	public void setRates(LinkedHashMap<String, BigDecimal> rates) {
+		this.rates = rates;
+	}
+	
+	@Override
+	public String toString() {
+		return "LongitudesPorDefecto [rates=" + rates + "]";
 	}
 }

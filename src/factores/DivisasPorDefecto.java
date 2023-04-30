@@ -2,37 +2,37 @@ package factores;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class DivisasPorDefecto {
-	public HashMap<String, String> divisasParaApp; 
-
-	private HashMap<String, BigDecimal> rates = new HashMap<String, BigDecimal>();
+	
+	private LinkedHashMap<String, String> divisas;
+	
+	private LinkedHashMap<String, BigDecimal> rates;
 	
 	public static void main(String[] args) {
 		DivisasPorDefecto divisasPorDefecto = new DivisasPorDefecto();
-		System.out.println(divisasPorDefecto.divisasParaApp);
+		System.out.println(divisasPorDefecto.divisas);
 		System.out.println(divisasPorDefecto.rates);
 		
 	}
 
 	public DivisasPorDefecto() {
 				
-		HashMap<String, String> divisas = new HashMap<String, String>();
-		
+		divisas = new LinkedHashMap<String, String>();
 		divisas.put("SVC", "SVC - Colón Salvadoreño");
 		divisas.put("USD", "USD - Dólar Estadounidense");
 		divisas.put("EUR", "EUR - Euros");
 		divisas.put("GBP", "GBP - Libras Esterlinas");
 		divisas.put("JPY", "JPY - Yen Japonés");
 		divisas.put("KRW", "KRW - Won Surcoreano");
-
 		
-		divisasParaApp = new HashMap<String, String>();
-		
+		rates = new LinkedHashMap<String, BigDecimal>();
+		              
 		divisas.forEach((key,value)->{
 			divisas.forEach((keyDos,valueDos)->{
 				if (!(key==keyDos)){
-					divisasParaApp.put(key+"->"+keyDos, "");					
+					rates.put(key+"->"+keyDos, new BigDecimal("0"));					
 				}
 			});
 		});
@@ -67,17 +67,24 @@ public class DivisasPorDefecto {
 		rates.put("SVC->KRW", new BigDecimal("153.026398"));
 		rates.put("EUR->KRW", new BigDecimal("1472.60182"));
 		rates.put("JPY->SVC", new BigDecimal("0.064274"));
-
 	}
 
-	public HashMap<String, BigDecimal> getRates() {
+	public LinkedHashMap<String, String> getDivisas() {
+		return divisas;
+	}
+
+	public void setDivisas(LinkedHashMap<String, String> divisas) {
+		this.divisas = divisas;
+	}
+
+	public LinkedHashMap<String, BigDecimal> getRates() {
 		return rates;
 	}
 
-	public void setRates(HashMap<String, BigDecimal> rates) {
+	public void setRates(LinkedHashMap<String, BigDecimal> rates) {
 		this.rates = rates;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "DivisasPorDefecto [rates=" + rates + "]";

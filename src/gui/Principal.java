@@ -2,12 +2,26 @@ package gui;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import factores.DivisasPorDefecto;
+import factores.LongitudesPorDefecto;
+import factores.MasasPorDefecto;
+import factores.TemperaturasPorDefecto;
+import factores.VelocidadesPorDefecto;
+import factores.VolumenesPorDefecto;
+import factory.FactoryVentana;
+import factory.FactoryVentanaTemperatura;
+
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,6 +46,7 @@ public class Principal extends JFrame {
 				try {
 					Principal framePrincipal = new Principal();
 					framePrincipal.setVisible(true);
+					centerWindow(framePrincipal);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,6 +58,7 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/imagenes/tipo-de-cambio.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 464, 408);
@@ -58,10 +74,52 @@ public class Principal extends JFrame {
 		ImageIcon wallpaper = new ImageIcon("src/imagenes/6256458.jpg");
 		this.repaint();
 		
-		
-		Secundario frameSecundario = new Secundario();
-		frameSecundario.setVisible(false);
 		//{"Divisas","Temperatura","Longitud","Masa","Volumen","Velocidad"};
+		//frame Divisas
+		DivisasPorDefecto divisasPorDefecto = new DivisasPorDefecto();
+		FactoryVentana frameDivisas = new FactoryVentana("Conversor de Divisas",
+				divisasPorDefecto.getDivisas(),divisasPorDefecto.getRates());
+		frameDivisas.setVisible(false);
+		centerWindow(frameDivisas);
+		
+		//frame Temperatura
+		TemperaturasPorDefecto temperaturasPorDefecto = new TemperaturasPorDefecto();
+		FactoryVentanaTemperatura frameTemperaturas = new FactoryVentanaTemperatura("Conversor de Temperaturas",
+				temperaturasPorDefecto.getTemperaturas(),temperaturasPorDefecto.getRates());
+		frameTemperaturas.setVisible(false);
+		centerWindow(frameTemperaturas);
+		
+		//frame Longitud
+		LongitudesPorDefecto longitudesPorDefecto = new LongitudesPorDefecto();
+		FactoryVentana frameLongitudes = new FactoryVentana("Conversor de Longitudes",
+				longitudesPorDefecto.getLongitudes(),longitudesPorDefecto.getRates());
+		frameLongitudes.setVisible(false);
+		centerWindow(frameLongitudes);
+		
+		//frame Masa
+		MasasPorDefecto masasPorDefecto = new MasasPorDefecto();
+		FactoryVentana frameMasas = new FactoryVentana("Conversor de Masas",
+				masasPorDefecto.getMasas(),masasPorDefecto.getRates());
+		frameMasas.setVisible(false);
+		centerWindow(frameMasas);
+		
+		//frame Volumen
+		VolumenesPorDefecto volumenesPorDefecto = new VolumenesPorDefecto();
+		FactoryVentana frameVolumenes = new FactoryVentana("Conversor de Volumenes",
+				volumenesPorDefecto.getVolumenes(),volumenesPorDefecto.getRates());
+		frameVolumenes.setVisible(false);
+		centerWindow(frameVolumenes);
+		
+		//frame Velocidad
+		VelocidadesPorDefecto velocidadesPorDefecto = new VelocidadesPorDefecto();
+		FactoryVentana frameVelocidades = new FactoryVentana("Conversor de Velocidades",
+				velocidadesPorDefecto.getVelocidades(),velocidadesPorDefecto.getRates());
+		frameVelocidades.setVisible(false);
+		centerWindow(frameVelocidades);
+		
+//		Secundario frameSecundario = new Secundario();
+//		frameSecundario.setVisible(false);
+
 		
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setFont(new Font("Quicksand Medium", Font.BOLD, 14));
@@ -76,7 +134,8 @@ public class Principal extends JFrame {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frameSecundario.setVisible(true);
+				frameDivisas.setVisible(true);
+				
 			}
 		});
 		btnNewButton.setBounds(113, 65, 55, 54);
@@ -86,6 +145,7 @@ public class Principal extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/thermometer_FILL0_wght400_GRAD0_opsz48.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frameTemperaturas.setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(113, 158, 55, 54);
@@ -95,6 +155,7 @@ public class Principal extends JFrame {
 		btnNewButton_2.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/straighten_FILL0_wght400_GRAD0_opsz48.png")));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frameLongitudes.setVisible(true);
 			}
 		});
 		btnNewButton_2.setBounds(113, 251, 55, 54);
@@ -104,6 +165,7 @@ public class Principal extends JFrame {
 		btnNewButton_3.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/weight_FILL0_wght400_GRAD0_opsz48.png")));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frameMasas.setVisible(true);
 			}
 		});
 		btnNewButton_3.setBounds(281, 65, 55, 54);
@@ -113,6 +175,7 @@ public class Principal extends JFrame {
 		btnNewButton_4.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/view_in_ar_FILL0_wght400_GRAD0_opsz48.png")));
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frameVolumenes.setVisible(true);
 			}
 		});
 		btnNewButton_4.setBounds(281, 158, 55, 54);
@@ -121,6 +184,7 @@ public class Principal extends JFrame {
 		JButton btnNewButton_5 = new JButton("");
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frameVelocidades.setVisible(true);
 			}
 		});
 		btnNewButton_5.setIcon(new ImageIcon(Principal.class.getResource("/imagenes/speed_FILL0_wght400_GRAD0_opsz48.png")));
@@ -170,5 +234,13 @@ public class Principal extends JFrame {
 		jLabel_Wallpaper.setIcon(iconoWallpaper);
 		
 
+	}
+	
+	public static void centerWindow(Window frame) {
+	    Rectangle bounds = frame.getGraphicsConfiguration().getBounds();
+	    Dimension dimension = bounds.getSize();
+	    int x = (int) (((dimension.getWidth() - frame.getWidth()) / 2) + bounds.getMinX());
+	    int y = (int) (((dimension.getHeight() - frame.getHeight()) / 2) + bounds.getMinY());
+	    frame.setLocation(x, y);
 	}
 }
