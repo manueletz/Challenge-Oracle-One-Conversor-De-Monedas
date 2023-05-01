@@ -40,6 +40,7 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -233,7 +234,6 @@ public class Principal extends JFrame {
 				jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT)); 
 		jLabel_Wallpaper.setIcon(iconoWallpaper);
 		
-
 	}
 	
 	public static void centerWindow(Window frame) {

@@ -40,32 +40,10 @@ public class FactoryVentana extends JFrame {
 	private Boolean bloqueoDeEvento = false;
 	private LinkedHashMap<String, BigDecimal> rates;
 
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FactoryVentana frame = new FactoryVentana();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
-
-	/**
-	 * Create the frame.
-	 */
 	public FactoryVentana(String titulo, LinkedHashMap<String, String> detallesDeFactores,
 			LinkedHashMap<String, BigDecimal> rates) {
 		this.rates=rates;
 		setResizable(false);
-		//setTitle("Conversor de Divisas");
 		setTitle(titulo);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/imagenes/tipo-de-cambio.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -78,24 +56,9 @@ public class FactoryVentana extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//DivisasPorDefecto divisasPorDefecto = new DivisasPorDefecto();
-
-		
 		//Convertir LinkedHashMap to array para items de comboBox
-		//String[] itemsComboBox = new String[divisasPorDefecto.getDivisas().size()];
-		//divisasPorDefecto.getDivisas().values().toArray(itemsComboBox);
 		String[] itemsComboBox = new String[detallesDeFactores.size()];
 		detallesDeFactores.values().toArray(itemsComboBox);
-		
-		/*
-		String[] itemsComboBox = new String[]{"SVC Colón Salvadoreño",
-												"USD Dólar Estadounidense",
-									            "EUR Euros",
-									            "GBP Libras Esterlinas",
-									            "JPY Yen Japonés",
-									            "KRW Won Sur Coreano"};
-		*/							            
-		
 		
 		JComboBox comboBox = new JComboBox(itemsComboBox);
 		comboBox.setName("comboBox");
@@ -124,13 +87,13 @@ public class FactoryVentana extends JFrame {
 		//Evento cuando se cambia un elemento de la lista
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ie) {
-				extracted(comboBox, comboBox_1, textField, textField_1, ie);
+				cambiarItem(comboBox, comboBox_1, textField, textField_1, ie);
 			}
 		});
 
 		comboBox_1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ie2) {
-				extracted(comboBox_1, comboBox, textField_1, textField, ie2);
+				cambiarItem(comboBox_1, comboBox, textField_1, textField, ie2);
 			}
 		});
 		
@@ -153,15 +116,14 @@ public class FactoryVentana extends JFrame {
 		textField_1.setBounds(313, 212, 96, 38);
 		contentPane.add(textField_1);
 
-		//Divisas y valores al inicar la aplicacion
-		comboBox.setSelectedIndex(0);  //indice 0 es divisa 'SVC'
-		comboBox_1.setSelectedIndex(1);//indice 1 es divisa 'USD'
+		//Valores al inicar la aplicacion
+		comboBox.setSelectedIndex(0);  //indice 0 en divisa es 'SVC'
+		comboBox_1.setSelectedIndex(1);//indice 1 en divisa es 'USD'
 		
-		//Colocar un colón salvadoreño al iniciar aplicación
+		//En divisas se coloca un colón salvadoreño al iniciar aplicación
 		textField.setText("1");
 		
-		//Conversion de colon salvadoreño a dolar al iniciar aplicacion
-		//textField_1.setText(Conversion("SVC->USD", "1"));
+		//En divisas Conversion de colon salvadoreño a dolar al iniciar aplicacion
 		escribirConversionEnTextField(comboBox, comboBox_1, textField, textField_1);
 		
 		esNumero(textField);
@@ -179,37 +141,6 @@ public class FactoryVentana extends JFrame {
 	public void esNumero(JTextField a) {
 		a.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				/*
-				char car = e.getKeyChar();
-				if((car<'0' || car>'9'))
-//				if((car!='-')&&(car!='+')&&(car!='.')) {
-//					e.consume();
-//				}
-
-				if((car!='-') && (car!='.')) {
-					e.consume();
-				}
-				if (car == '.' && a.getText().contains(".")) {
-					e.consume();
-				}
-				if (car == '-' && a.getText().contains("-")) {
-					e.consume();
-				}
-				if (a.getText().length() == 0 && car == '.') {
-					e.consume();
-				}
-				
-				if (a.getText().length() > 0 && car == '-') {
-					e.consume();
-				}
-
-				if (a.getText().length() == 1 && car == '.' && a.getText().substring(0, 1).equals("-")) {
-					e.consume();
-				}
-				*/
-				
-				
-				
 				char c = e.getKeyChar();
 				if (a.getText().length() == 0 && c == '.') {
 					e.consume();
@@ -221,7 +152,6 @@ public class FactoryVentana extends JFrame {
 						e.consume();
 					}
 				}
-				
 			}
 		});
 	}
@@ -231,15 +161,6 @@ public class FactoryVentana extends JFrame {
         if (s == null || s.equals("")) {
             return false;
         }
-        /*
-        for (int i = 0; i < s.length(); i++)
-        {
-            char c = s.charAt(i);
-            if (c < '0' || c > '9') {
-                return false;
-            }
-        }
-        */
         return true;
     }
     
@@ -272,12 +193,6 @@ public class FactoryVentana extends JFrame {
 		
 		resultadoTexto = EliminarNotacionCientificaBigDecimal(resultado.remainder(new BigDecimal(1)));
 		
-		/*
-		Integer verificarCero=0;
-		Integer posicionesRedondeo=0;
-		Boolean NoEsCero=false; 
-		Integer dosNumerosDespuesDeCero=0;
-		*/
 		BigDecimal verificarCero = new BigDecimal("0");
 		BigDecimal posicionesRedondeo = new BigDecimal("0");;
 		Boolean NoEsCero=false; 
@@ -290,55 +205,12 @@ public class FactoryVentana extends JFrame {
 		}else {
 			i=2;
 		}
-		/*
-		while (i <resultadoTexto.length()) {
-
-			//posicionesRedondeo++;
-			posicionesRedondeo = posicionesRedondeo.add(new BigDecimal("1"));
-			
-			if (i==3) {
-				//verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
-				//verificarCero = verificarCero.add(new BigDecimal(resultadoTexto.substring(i,i+1)));
-				
-			}else {
-				verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
-			}
-			
-			verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
-			
-			if (verificarCero>0) {
-				NoEsCero=true;
-			}
-			
-			if (NoEsCero==true) {
-				dosNumerosDespuesDeCero++;
-			}
-			
-			if (dosNumerosDespuesDeCero==2) {
-				break;
-			}
-			
-			i++;
-		}
-		*/
 		
 		while (i <resultadoTexto.length()) {
 
 			//posicionesRedondeo++;
 			posicionesRedondeo = posicionesRedondeo.add(new BigDecimal("1"));
-			/*
-			if (i==3) {
-				//verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
-				//verificarCero = verificarCero.add(new BigDecimal(resultadoTexto.substring(i,i+1)));
-				
-			}else {
-				verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
-			}
-			*/
 			
-			//verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
-			System.out.println("resultadoTexto: "+resultadoTexto);
-			System.out.println("i = "+ i +"; "+resultadoTexto.substring(i,i+1));
 			verificarCero = verificarCero.add(new BigDecimal(resultadoTexto.substring(i,i+1)));
 			
 			if (verificarCero.compareTo(new BigDecimal("0"))==1) {//1 se utiliza en BigDecimal para mayor que
@@ -346,39 +218,30 @@ public class FactoryVentana extends JFrame {
 			}
 			
 			if (NoEsCero==true) {
-				//dosNumerosDespuesDeCero++;
 				dosNumerosDespuesDeCero = dosNumerosDespuesDeCero.add(new BigDecimal("1"));
 			}
 			
-			//if (dosNumerosDespuesDeCero==2) {
 			if (dosNumerosDespuesDeCero.compareTo(new BigDecimal("2"))==0) {//0 se utiliza en BigDecimal para igual
 				break;
 			}
 			
 			i++;
 		}
-		
-		
-		
+
+
 		//Finalmente si todos los numeros son 0 despues del punto decimal
 		//se colocará 2 posiciones decimales
-//		if (dosNumerosDespuesDeCero==0) {
-//			posicionesRedondeo=2;
-//		}
 		if (dosNumerosDespuesDeCero.compareTo(new BigDecimal("0"))==0) {
-			//posicionesRedondeo=2;
 			posicionesRedondeo = new BigDecimal("2");
 		}
 		
 		//Resultado final de redondeo a las posiciones de dos digitos despues de cero
 		resultado = resultado.setScale(posicionesRedondeo.intValue(), RoundingMode.HALF_UP);
-		//resultado = resultado.setScale(2, RoundingMode.HALF_UP);
 		
-		//return resultado.toString();
 		return EliminarNotacionCientificaBigDecimal(resultado);
 	}
 
-	private void extracted(JComboBox comboBox, JComboBox comboBox_1, JTextField textField, JTextField textField_1,  ItemEvent ie) {
+	private void cambiarItem(JComboBox comboBox, JComboBox comboBox_1, JTextField textField, JTextField textField_1,  ItemEvent ie) {
 		if(ie.getStateChange() == ItemEvent.DESELECTED){
 		      
 			itemAnterior=ie.getItem();
@@ -396,7 +259,6 @@ public class FactoryVentana extends JFrame {
 	    	}else {
 	    		escribirConversionEnTextField(comboBox, comboBox_1, textField, textField_1);
 	    	}
-
 		}
 	}
 
@@ -405,8 +267,6 @@ public class FactoryVentana extends JFrame {
 
 			String valor = textField.getText();
 			
-				
-			//if (Float.parseFloat(valor)>0){
 			if (isNumeric(valor)){
 				String divisaOrigen  = (String) comboBox.getSelectedItem();
 				String divisaDestino = (String) comboBox_1.getSelectedItem();
