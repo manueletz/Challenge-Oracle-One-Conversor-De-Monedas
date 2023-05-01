@@ -96,6 +96,7 @@ public class FactoryVentanaTemperatura extends FactoryVentana {
 		//Funcion para colocar decimales representativos y no mostrar 00 en
 		//cantidad pequeñas
 		//Resto extrae la parte decimal de una numero
+		/*
 		resultadoTexto = (resultado.remainder(new BigDecimal(1))).toString();
 		System.out.println(resultadoTexto);
 		Integer verificarCero=0;
@@ -148,5 +149,114 @@ public class FactoryVentanaTemperatura extends FactoryVentana {
 	
 		return resultado.toString();
 	}
+	*/
+		resultadoTexto = EliminarNotacionCientificaBigDecimal(resultado.remainder(new BigDecimal(1)));
+		
+		/*
+		Integer verificarCero=0;
+		Integer posicionesRedondeo=0;
+		Boolean NoEsCero=false; 
+		Integer dosNumerosDespuesDeCero=0;
+		*/
+		BigDecimal verificarCero = new BigDecimal("0");
+		BigDecimal posicionesRedondeo = new BigDecimal("0");;
+		Boolean NoEsCero=false; 
+		BigDecimal dosNumerosDespuesDeCero = new BigDecimal("0");
+		
+		
+		int i;
+		if (resultadoTexto.substring(0, 1).equals("-")) {
+			i=3;
+		}else {
+			i=2;
+		}
+		/*
+		while (i <resultadoTexto.length()) {
+
+			//posicionesRedondeo++;
+			posicionesRedondeo = posicionesRedondeo.add(new BigDecimal("1"));
+			
+			if (i==3) {
+				//verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
+				//verificarCero = verificarCero.add(new BigDecimal(resultadoTexto.substring(i,i+1)));
+				
+			}else {
+				verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
+			}
+			
+			verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
+			
+			if (verificarCero>0) {
+				NoEsCero=true;
+			}
+			
+			if (NoEsCero==true) {
+				dosNumerosDespuesDeCero++;
+			}
+			
+			if (dosNumerosDespuesDeCero==2) {
+				break;
+			}
+			
+			i++;
+		}
+		*/
+		
+		while (i <resultadoTexto.length()) {
+
+			//posicionesRedondeo++;
+			posicionesRedondeo = posicionesRedondeo.add(new BigDecimal("1"));
+			/*
+			if (i==3) {
+				//verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
+				//verificarCero = verificarCero.add(new BigDecimal(resultadoTexto.substring(i,i+1)));
+				
+			}else {
+				verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
+			}
+			*/
+			
+			//verificarCero += Integer.valueOf(resultadoTexto.substring(i,i+1));
+			System.out.println("resultadoTexto: "+resultadoTexto);
+			System.out.println("i = "+ i +"; "+resultadoTexto.substring(i,i+1));
+			verificarCero = verificarCero.add(new BigDecimal(resultadoTexto.substring(i,i+1)));
+			
+			if (verificarCero.compareTo(new BigDecimal("0"))==1) {//1 se utiliza en BigDecimal para mayor que
+				NoEsCero=true;
+			}
+			
+			if (NoEsCero==true) {
+				//dosNumerosDespuesDeCero++;
+				dosNumerosDespuesDeCero = dosNumerosDespuesDeCero.add(new BigDecimal("1"));
+			}
+			
+			//if (dosNumerosDespuesDeCero==2) {
+			if (dosNumerosDespuesDeCero.compareTo(new BigDecimal("2"))==0) {//0 se utiliza en BigDecimal para igual
+				break;
+			}
+			
+			i++;
+		}
+		
+		
+		
+		//Finalmente si todos los numeros son 0 despues del punto decimal
+		//se colocará 2 posiciones decimales
+//		if (dosNumerosDespuesDeCero==0) {
+//			posicionesRedondeo=2;
+//		}
+		if (dosNumerosDespuesDeCero.compareTo(new BigDecimal("0"))==0) {
+			//posicionesRedondeo=2;
+			posicionesRedondeo = new BigDecimal("2");
+		}
+		
+		//Resultado final de redondeo a las posiciones de dos digitos despues de cero
+		resultado = resultado.setScale(posicionesRedondeo.intValue(), RoundingMode.HALF_UP);
+		//resultado = resultado.setScale(2, RoundingMode.HALF_UP);
+		
+		//return resultado.toString();
+		return EliminarNotacionCientificaBigDecimal(resultado);
+	}
 
 }
+
